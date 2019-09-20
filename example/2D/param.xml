@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+
+<geometry>
+    <Resolution> 1 </Resolution>
+    <!-- One lattice has N cells -->
+    <Viscosity> 0.02 </Viscosity>
+    <!-- Reynolds number -->
+    <x_length> 240 </x_length>
+    <y_length> 120 </y_length>
+    <!-- size of the flow domain -->
+</geometry>
+
+<!-- All fluid properties are given in physical units. -->
+<fluid>
+    <Shear_flag> 0 </Shear_flag>
+	<!-- shear flow flag -->
+    <Shear_Top_Velocity> 0.1 </Shear_Top_Velocity>
+    <Shear_Bot_Velocity> -0.1 </Shear_Bot_Velocity>
+	<Poiseuille_flag> 1 </Poiseuille_flag>
+	<!-- Poiseuille flow flag -->
+	<Poiseuille_bodyforce> 0.000015 </Poiseuille_bodyforce>
+	<Uniform_flag> 0 </Uniform_flag>
+	<!-- uniform flow flag -->
+	<U_uniform> 0.01 </U_uniform>
+</fluid>
+
+<simulation>
+    
+    <Total_timestep>  400000 </Total_timestep>
+    <!-- Maximum timestep for simulation. -->
+    <Output_fluid_file> 200      </Output_fluid_file>
+    <Output_check_file>  20000  </Output_check_file>
+
+    <CouplingType>      2   </CouplingType>
+    <!-- CouplingType: 1: velocity coupling(default); 2: force coupling -->
+	<StaticAtomType>      2   </StaticAtomType>
+</simulation>
+

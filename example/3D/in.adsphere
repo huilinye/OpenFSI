@@ -1,0 +1,50 @@
+units          lj
+dimension 3
+atom_style molecular
+boundary    p p p
+processors 2 4 2
+neighbor   0.6 bin
+neigh_modify   delay 0 every 1
+
+#define the potential 
+pair_style lj/cut  2.0
+bond_style     harmonic
+improper_style octa
+
+#angle_style harmonic
+#read_data 1sphere.data
+read_data lat_3D_plate.data
+#read_data point.data
+
+group fixed molecule 1
+group move molecule 2
+#group forc molecule 1
+
+pair_coeff  * * 0.0e-6 1.0 2.0
+
+neigh_modify exclude molecule move
+
+
+#mass 1 10
+#velocity       all set 0.0 0.0 0.0 units box
+timestep 0.1
+#velocity forc set 0.0 1.0 0.0 units box
+
+#outputfile
+dump 1 all custom 1000  sphere.lammpstrj id mol type x y z
+dump_modify 1 sort id
+
+#compute 1 forc com
+#fix 3 all ave/time 100 5 1000 c_1[1] c_1[2] file com.dat
+fix ha all vtk 1000 Hex meshfile octa_ele.data output solid/cy
+
+compute 2 all property/atom fx fy fz
+compute 3 all reduce sum c_2[2]
+fix out2 all ave/time 10 1 10 c_3 file force.dat
+
+fix 1 all fcm 1 1
+fix 2 move nve
+
+#fix 2 all nve
+#fix addf forc addforce 0.0001 0.0 0.0
+#run 100
