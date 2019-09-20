@@ -12,10 +12,10 @@
  Compiling:
 
  1. Compile the LAMMPS as a library. (please reference to https://lammps.sandia.gov/doc/Manual.html)
- 2. Modify the Makefile under the eaxmple. \\
- 2.1 You need to include the LAMMPS library path. \\
- 2.2 You should make sure the lammps_palabos_coupling and IB_model are in the includePaths. \\
- 2.3 Remeber to include the palabos root directory.
+ 2. Modify the Makefile under the eaxmple. 
+ - You need to include the LAMMPS library path. 
+ - You should make sure the lammps_palabos_coupling and IB_model are in the includePaths.
+ - Remeber to include the palabos root directory.
  3. Compile the example.
 
 
