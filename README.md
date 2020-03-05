@@ -1,7 +1,7 @@
 # OpenFSI Manual
 ## Table of contents
 - About OpenFSI
-  - highlighted features
+  - [highlighted features]
   - code structure
 - Install
 - Use OpenFSI
