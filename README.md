@@ -1,8 +1,8 @@
 # OpenFSI Manual
 
 ## Table of contents
-- [About OpenFSI](##About-OpenFSI)
-  - [highlighted features](###Highlighted-features)
+- [About OpenFSI](#About-OpenFSI)
+  - [highlighted features](#Highlighted-features)
   - code structure
 - Install
 - Use OpenFSI
