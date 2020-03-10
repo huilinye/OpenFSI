@@ -22,13 +22,11 @@
 #ifndef LATTICE_DECOMPOSITION2D_HH
 #define LATTICE_DECOMPOSITION2D_HH
 
-
-//#include "latticeDecomposition.h"
  
-// LAMMPS / LIGGGHTS includes
+// LAMMPS
 #include "comm.h"
 #include "domain.h"
-//#include "mpi.h"
+
 
 namespace plb {
 
@@ -36,6 +34,8 @@ LatticeDecomposition2D::LatticeDecomposition2D(plb::plint nx_, plb::plint ny_, p
   : nx(nx_),ny(ny_),lmp(*lmp_),
     blockStructure(0),threadAttribution(0)
 {
+  // Obtain the domain decomposition information from LAMMPS
+  
   npx = lmp.comm->procgrid[0];
   npy = lmp.comm->procgrid[1];
   npz = lmp.comm->procgrid[2];
@@ -48,8 +48,7 @@ LatticeDecomposition2D::LatticeDecomposition2D(plb::plint nx_, plb::plint ny_, p
     zVal.push_back(round( lmp.comm->zsplit[i]*(double)nz ));
   }
 
-  //pcout<<"domain lb "<<xVal[0]<<" "<<xVal.back()<<" y "<<yVal[0]<<" "<<yVal.back()<<" z "<<zVal[0]<<" "<<zVal.back()<<std::endl;
-  //pcout<<"domain lb_ini "<<xVal[0]<<" "<<xVal[1]<<" x "<<xVal[2]<<" "<<yVal[1]<<" z "<<zVal[0]<<" "<<zVal[1]<<std::endl;
+  // Assign the block boundary coordinate
   
   blockStructure = new SparseBlockStructure2D(Box2D(xVal[0], xVal.back()-1, 
                                                     yVal[0], yVal.back()-1) 
@@ -64,7 +63,7 @@ LatticeDecomposition2D::LatticeDecomposition2D(plb::plint nx_, plb::plint ny_, p
         blockStructure->addBlock (Box2D( xVal[iX], xVal[iX+1]-1, yVal[iY],
                                          yVal[iY+1]-1),
                                   id);
-        threadAttribution->addBlock(id,(plint)lmp.comm->grid2proc[iX][iY][iZ]);
+        threadAttribution->addBlock(id,(plint)lmp.comm->grid2proc[iX][iY][iZ]); // Assign the threadID and corresponding blocks
       }
     }
   }

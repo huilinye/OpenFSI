@@ -20,6 +20,10 @@
 - **Coupling high-performance software packages** i.e., LAMMPS and Palabos.
 - **Highly portable** There are broad applications including 2D and 3D FSI problems.
 
+### Code structure
+
+
+
 ## How to use it:
  Preparation: 
 

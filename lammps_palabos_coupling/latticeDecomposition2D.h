@@ -21,8 +21,6 @@
 
 #ifndef LATTICE_DECOMPOSITION2D_H
 #define LATTICE_DECOMPOSITION2D_H
-//#include "palabos3D.h"
-//#include "palabos3D.hh"
 
 #include "mpi.h"
 #include "lammps.h"
