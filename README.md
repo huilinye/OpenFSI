@@ -40,6 +40,8 @@
  - You should make sure the lammps_palabos_coupling and IB_model are in the includePaths.
  - Remeber to include the palabos root directory.
  3. Compile the example.
+ 
+ Run:
 
 
 
