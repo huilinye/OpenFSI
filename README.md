@@ -21,7 +21,7 @@
 - **Highly portable** There are broad applications including 2D and 3D FSI problems.
 
 ### Code structure
-- 'example': Examples to show how OpenFSI runs 2D and 3D problems
+- `example`: Examples to show how OpenFSI runs 2D and 3D problems
 
 
 ## How to use it:
