@@ -78,20 +78,20 @@
     It is strongly recommended not to change any setups including the compiler to use with MPI parallelism, general compiler flags and palabos compile setups.
  
 - Compile
- Put the Makefile in your working dirctory `work_dir`, and then simply type
+  Put the Makefile in your working dirctory `work_dir`, and then simply type
  
- `make`
+  `make`
  
- in the command window, a executable file named `$project_name` will generate
+   in the command window, a executable file named `$project_name` will generate
  
 - Run
  
-Configure you lammps input file, e.g., `in.lammps`, which setups the system, including reading particle coordinates, angles information and 
-bond information, and parallelism pattern such as CPU cores that will be used to run the simulation. After checking 
-the input file, just type following command to run the simulation
+   Configure you lammps input file, e.g., `in.lammps`, which setups the system, including reading particle coordinates, angles information and 
+   bond information, and parallelism pattern such as CPU cores that will be used to run the simulation. After checking 
+   the input file, just type following command to run the simulation
  
-`./$project_name in.lammps > log.file`
+   `./$project_name in.lammps > log.file`
 
-`log.file` will record the information displayed in the window.
+   `log.file` will record the information displayed in the window.
 
 
