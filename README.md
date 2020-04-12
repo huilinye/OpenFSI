@@ -54,28 +54,28 @@
   Create directory, e.g., `coupling_dir` to include the `src/IB_interface` and `src/lammps_palabos_coupling` files
   
 - Modify Makefile
- In the `example` directory, each case is attached a Makefile for generating executable file. 
- First, you should provide the directory where Palabos locates, e.g., `palabos_dir`
+  In the `example` directory, each case is attached a Makefile for generating executable file. 
+  First, you should provide the directory where Palabos locates, e.g., `palabos_dir`
  
- `palabosRoot  = $palabos_dir`
+  `palabosRoot  = $palabos_dir`
  
- You can set up the name of the project files for concrete problem. 2D and 3D prototypes are provided in `src/main`\
+  You can set up the name of the project files for concrete problem. 2D and 3D prototypes are provided in `src/main`\
  
- `projectFiles = $project_name.cpp`
+  `projectFiles = $project_name.cpp`
  
- The libraries in lammps dirctory should be included
+  The libraries in lammps dirctory should be included
  
- `libraryPaths = $lammps_dir/src`
+  `libraryPaths = $lammps_dir/src`
  
- Also, the dirctory containing the files in lammps and coupling is necessary
+   Also, the dirctory containing the files in lammps and coupling is necessary
  
- `includePaths =  $lammps_dir/src $coupling_dir `
+  `includePaths =  $lammps_dir/src $coupling_dir `
  
- Finally, the name of shared library generated in lammps is provided
+   Finally, the name of shared library generated in lammps is provided
  
- `libraries    = liblammps_mpi.a`
+   `libraries    = liblammps_mpi.a`
  
- It is strongly recommended not to change any setups including the compiler to use with MPI parallelism, general compiler flags and palabos compile setups.
+    It is strongly recommended not to change any setups including the compiler to use with MPI parallelism, general compiler flags and palabos compile setups.
  
 - Compile
  Put the Makefile in your working dirctory `work_dir`, and then simply type
