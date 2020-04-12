@@ -34,7 +34,7 @@
  1. First you should download Palabos source code from http://www.palabos.org/.
  2. Then you also need to download LAMMPS source code from https://lammps.sandia.gov/.
  3. Make sure you have installed the MPI library.
- 4. Add the files in `src/structure_potential` into LAMMPS/src directory.
+ 4. Add the files in `src/fix_LB` and `src/structure_potential` into LAMMPS/src directory.
 
  Compiling:
 
@@ -44,11 +44,34 @@
   , mpi or intel-optimised version, which depends on the computer architecture used in the simulation.
   For example, if you want to run the simulation in mpi mode, you should first observe that there is a makefile
   named `Makefile.mpi` in `lammps/src/MAKE`, then make it with library mode \
-  `cd lammps/src` \
+  > cd lammps/src
   `make mode=lib mpi` \
-  You will find a lammps library named `liblammps_mpi.a` generated.
+  This will generate a lammps library named `liblammps_mpi.a`
 
--   
+- Install coupling interface 
+
+  
+
+- Modify Makefile
+ In the `example` directory, each case is attached a Makefile for generating executable file. 
+ First, you should provide the directory where Palabos locates, e.g., `palabos_dir` \
+ `palabosRoot  = $palabos_dir`\
+ You can set up the name of the project files for concrete problem. 2D and 3D prototypes are provided in `src/main`\
+ `projectFiles = $project_name.cpp`\
+ 
+ 
+ 
+ 
+
+# Path to external libraries (other than Palabos)
+libraryPaths = /home/huy16104/lammps-palabos/src
+# Path to inlude directories (other than Palabos)
+includePaths =  /home/huy16104/lammps-palabos/src /home/huy16104/lammps-palabos/coupling/src
+# Dynamic and static libraries (other than Palabos)
+libraries    = liblammps_mpi.a
+ 
+ 
+ 
  2. Modify the Makefile under the eaxmple. 
  - You need to include the LAMMPS library path. 
  - You should make sure the lammps_palabos_coupling and IB_model are in the includePaths.
