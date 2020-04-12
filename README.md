@@ -49,8 +49,10 @@
   For example, if you want to run the simulation in mpi mode, you should first observe that there is a makefile
   named `Makefile.mpi` in `$lammps_dir/src/MAKE`, then make it with library mode
   
-  `cd $lammps_dir/src` \
-  `make mode=lib mpi` 
+  ```
+  cd $lammps_dir/src
+  make mode=lib mpi
+  ```
   
   This will generate a lammps library named `liblammps_mpi.a`
 
