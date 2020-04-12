@@ -43,9 +43,9 @@
   Inside the directory `lammps/src/MAKE`, there are many options for the makefile. It is possibile to run lammps in serial
   , mpi or intel-optimised version, which depends on the computer architecture used in the simulation.
   For example, if you want to run the simulation in mpi mode, you should first observe that there is a makefile
-  named `Makefile.mpi` in `lammps/src/MAKE`, then make it with library mode
-  `cd lammps/src`
-  `make mode=lib mpi`
+  named `Makefile.mpi` in `lammps/src/MAKE`, then make it with library mode \\
+  `cd lammps/src` \\
+  `make mode=lib mpi` \\
   You will find a lammps library named `liblammps_mpi.a` generated.
 
 -   
