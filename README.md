@@ -39,6 +39,7 @@
  Compiling:
 
 - Compile the LAMMPS as a library
+
   Assume you install the lammps under the dirctory `$lammps_dir`
   Inside the directory `$lammps_dir/src/MAKE`, there are many options for the makefile. It is possibile to run lammps in serial
   , mpi or intel-optimised version, which depends on the computer architecture used in the simulation.
@@ -51,9 +52,11 @@
   This will generate a lammps library named `liblammps_mpi.a`
 
 - Install coupling interface 
+
   Create directory, e.g., `coupling_dir` to include the `src/IB_interface` and `src/lammps_palabos_coupling` files
   
 - Modify Makefile
+
   In the `example` directory, each case is attached a Makefile for generating executable file. 
   First, you should provide the directory where Palabos locates, e.g., `palabos_dir`
  
@@ -78,6 +81,7 @@
     It is strongly recommended not to change any setups including the compiler to use with MPI parallelism, general compiler flags and palabos compile setups.
  
 - Compile
+
   Put the Makefile in your working dirctory `work_dir`, and then simply type
  
   `make`
