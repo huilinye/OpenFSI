@@ -65,23 +65,23 @@
   In the `example` directory, each case is attached a Makefile for generating executable file. 
   First, you should provide the directory where Palabos locates, e.g., `palabos_dir`
  
-  `palabosRoot  = $palabos_dir`
+  ```palabosRoot  = $palabos_dir```
  
   You can set up the name of the project files for concrete problem. 2D and 3D prototypes are provided in `src/main`
  
-  `projectFiles = $project_name.cpp`
+  ```projectFiles = $project_name.cpp```
  
   The libraries in lammps dirctory should be included
  
-  `libraryPaths = $lammps_dir/src`
+  ```libraryPaths = $lammps_dir/src```
  
    Also, the dirctory containing the files in lammps and coupling is necessary
  
-  `includePaths =  $lammps_dir/src $coupling_dir `
+  ```includePaths =  $lammps_dir/src $coupling_dir ```
  
    Finally, the name of shared library generated in lammps is provided
  
-   `libraries    = liblammps_mpi.a`
+   ```libraries    = liblammps_mpi.a```
  
     It is strongly recommended not to change any setups including the compiler to use with MPI parallelism, general compiler flags and palabos compile setups.
  
@@ -89,7 +89,7 @@
 
   Put the Makefile in your working dirctory `work_dir`, and then simply type
  
-  `make`
+  ```make```
  
    in the command window, a executable file named `$project_name` will generate
  
@@ -99,20 +99,96 @@
    bond information, and parallelism pattern such as CPU cores that will be used to run the simulation. After checking 
    the input file, just type following command to run the simulation
  
-   `./$project_name in.lammps > log.file`
+   ```./$project_name in.lammps > log.file```
 
    `log.file` will record the information displayed in the window.
 
 ## Use OpenFSI
 
 ###Prepare data and input files
+- Data file
 One data file is necessary that describes the system including the number of the particles and bonds, the size of the domain,
-coordinates of the particles, and coefficients of the bonds, etc. Following is an example from `example/2D`:
+coordinates of the particles, and coefficients of the bonds, etc. Following is an example from `example/2D/2D_cylinder_beam.data`:
 
+The first part claims the numbers and types of particles and relevant lattice properties, respectively.
 ```
 866 atoms
 4572 bonds
 0 angles
 0 dihedrals
 762 impropers
+
+866 atom types
+4572 bond types
+0 angle types
+0 dihedral types
+762 improper types
 ```
+The second part define the boundary of the domain
+```
+0.000 240.000 xlo xhi
+0.000 120.000 ylo yhi
+0.000   1.000 zlo zhi
+```
+`lo` and `hi` represent the lower and upper bound of the domain. Because there is no physical 2D domain setup in LAMMPS, the third dimension should be claimed no matter what is 
+the dimension of the problem. It is necessary to
+exert 2D command in the lammps input file to exclude the effect of the third dimension.
+
+Following is the mass part
+```
+Masses
+
+1 0.04375914 
+2 0.06035109 
+3 0.02000890 
+...
+```
+The first column is the type of the particle and the second one is the mass of the corresponding particle.
+
+Then the Bond, angle, dihedral and improper coefficients are presented one by one. In bond part
+```
+Bond Coeffs #harmonic
+
+1 0.00061920 0.00000000
+2 0.00061805 0.00000000
+3 0.00061692 0.00000000
+...
+```
+Here, the harmonic bond is shown.
+The first column is the type of the bond; second column tells the bond coefficient; and last column is the equlibrium length of the bond.
+For this 2D problem, there is no angle and dihedral potential applied, therefore these parts can be leaved blank in the
+data file. The improper part is like
+```
+Improper Coeffs #neohookean
+
+1 0.010000 1.000000 0.795583
+2 0.010000 1.000000 0.795640
+3 0.010000 1.000000 0.795695
+...
+``` 
+Following is the coordinates of the particles in the system
+```
+1 1 1 40.00000000 60.00000000 0.50000000
+2 2 2 60.00000000 60.00000000 0.50000000
+3 2 3 130.00000000 60.00000000 0.50000000
+...
+```
+First column is the ID of the particle; second and third column are type ID and molecule ID, respectively. Here,
+molecule ID is illustrated to represent the body of the solid structure. For example, if there are two beams in the
+system, then one is denoted molecule 1 and the other is described as molecule 2. The third, fourth and fifth columns are
+the coordinate of the corresponding particle in x, y and z directions, respectively.
+
+The last part is the patterns of the lattice properties, e.g., bond, angle, and improper. We give an example of bond
+```
+Bonds
+
+1 1 1 7
+2 2 7 8
+3 3 8 9
+...
+```
+The first column is the ID of the bond, and the second one is the bond type. The third and fourth are the IDs of the particles which are
+are bonded.
+
+- Input files
+Two input files are required.
