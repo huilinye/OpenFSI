@@ -107,6 +107,7 @@
 
 ### Prepare data and input files
 - Data file
+
 One data file is necessary that describes the system including the number of the particles and bonds, the size of the domain,
 coordinates of the particles, and coefficients of the bonds, etc. Following is an example from `example/2D/2D_cylinder_beam.data`:
 
@@ -191,4 +192,5 @@ The first column is the ID of the bond, and the second one is the bond type. The
 are bonded.
 
 - Input files
+
 Two input files are required.
