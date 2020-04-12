@@ -3,8 +3,8 @@
 ## Table of contents
 - [About OpenFSI](#About-OpenFSI)
   - [highlighted features](#Highlighted-features)
-  - code structure
-- Install
+  - [code structure](#Code-structure)
+- Compile and Run
 - Use OpenFSI
   - Prepare input files
   - Application
@@ -21,7 +21,7 @@
 - **Highly portable** There are broad applications including 2D and 3D FSI problems.
 
 ### Code structure
-
+- 'example': Examples to show how OpenFSI runs 2D and 3D problems
 
 
 ## How to use it:
