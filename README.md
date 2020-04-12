@@ -31,32 +31,31 @@
 ## Compile and Run 
  
  Preparation: 
- 1. First you should download Palabos source code from http://www.palabos.org/.
- 2. Then you also need to download LAMMPS source code from https://lammps.sandia.gov/.
- 3. Make sure you have installed the MPI library.
- 4. Add the files in `src/fix_LB` and `src/structure_potential` into LAMMPS/src directory.
+ - First you should download Palabos source code from http://www.palabos.org/.
+ - Then you also need to download LAMMPS source code from https://lammps.sandia.gov/.
+ - Make sure you have installed the MPI library.
+ - Add the files in `src/fix_LB` and `src/structure_potential` into LAMMPS/src directory.
 
  Compiling:
 
 - Compile the LAMMPS as a library
-  
-  Inside the directory `lammps/src/MAKE`, there are many options for the makefile. It is possibile to run lammps in serial
+  Assume you install the lammps under the dirctory `$lammps_dir`
+  Inside the directory `$lammps_dir/src/MAKE`, there are many options for the makefile. It is possibile to run lammps in serial
   , mpi or intel-optimised version, which depends on the computer architecture used in the simulation.
   For example, if you want to run the simulation in mpi mode, you should first observe that there is a makefile
-  named `Makefile.mpi` in `lammps/src/MAKE`, then make it with library mode
+  named `Makefile.mpi` in `$lammps_dir/src/MAKE`, then make it with library mode
   
-  `cd lammps/src` \
+  `cd $lammps_dir/src` \
   `make mode=lib mpi` 
   
   This will generate a lammps library named `liblammps_mpi.a`
 
 - Install coupling interface 
-
+  Create directory, e.g., `coupling_dir` to include the `src/IB_interface` and `src/lammps_palabos_coupling` files
   
-
 - Modify Makefile
  In the `example` directory, each case is attached a Makefile for generating executable file. 
- First, you should provide the directory where Palabos locates, e.g., `palabos_dir` \
+ First, you should provide the directory where Palabos locates, e.g., `palabos_dir`
  
  `palabosRoot  = $palabos_dir`
  
@@ -64,26 +63,35 @@
  
  `projectFiles = $project_name.cpp`
  
+ The libraries in lammps dirctory should be included
  
+ `libraryPaths = $lammps_dir/src`
  
+ Also, the dirctory containing the files in lammps and coupling is necessary
  
+ `includePaths =  $lammps_dir/src $coupling_dir `
+ 
+ Finally, the name of shared library generated in lammps is provided
+ 
+ `libraries    = liblammps_mpi.a`
+ 
+ It is strongly recommended not to change any setups including the compiler to use with MPI parallelism, general compiler flags and palabos compile setups.
+ 
+- Compile
+ Put the Makefile in your working dirctory `work_dir`, and then simply type
+ 
+ `make`
+ 
+ in the command window, a executable file named `$project_name` will generate
+ 
+- Run
+ 
+Configure you lammps input file, e.g., `in.lammps`, which setups the system, including reading particle coordinates, angles information and 
+bond information, and parallelism pattern such as CPU cores that will be used to run the simulation. After checking 
+the input file, just type following command to run the simulation
+ 
+`./$project_name in.lammps > log.file`
 
-# Path to external libraries (other than Palabos)
-libraryPaths = /home/huy16104/lammps-palabos/src
-# Path to inlude directories (other than Palabos)
-includePaths =  /home/huy16104/lammps-palabos/src /home/huy16104/lammps-palabos/coupling/src
-# Dynamic and static libraries (other than Palabos)
-libraries    = liblammps_mpi.a
- 
- 
- 
- 2. Modify the Makefile under the eaxmple. 
- - You need to include the LAMMPS library path. 
- - You should make sure the lammps_palabos_coupling and IB_model are in the includePaths.
- - Remeber to include the palabos root directory.
- 3. Compile the example.
- 
- Run:
-
+`log.file` will record the information displayed in the window.
 
 
