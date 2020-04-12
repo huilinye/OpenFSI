@@ -4,7 +4,7 @@
 - [About OpenFSI](#About-OpenFSI)
   - [highlighted features](#Highlighted-features)
   - [code structure](#Code-structure)
-- Compile and Run
+- [Compile and Run](#Compile-and-Run)
 - Use OpenFSI
   - Prepare input files
   - Application
@@ -22,9 +22,15 @@
 
 ### Code structure
 - `example`: Examples to show how OpenFSI runs 2D and 3D problems
+- `src/fix_LB`: Revised `fix_lb` files embedded in LAMMPS for solving fluid dynamics using Latticel Boltzmann method (LBM)
+- `src/IB_interface`: Implementation for immersed-boundary method including velocity and force couplings
+- `src/lammps_palabos_coupling`: Technique to fulfill the consistant cpu mapping between LAMMPS and Palabos
+- `src/main`: Main file to offer user interface to set up properties such as type of flow and boundary conditions
+- `src/structure_potential`: Potentials to calculate lattice model and membrane model
 
-
-## How to use it:
+## Compile and Run
+ 
+ 
  Preparation: 
 
  1. First you should download Palabos source code from http://www.palabos.org/.
