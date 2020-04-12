@@ -5,7 +5,10 @@
   - [highlighted features](#Highlighted-features)
   - [code structure](#Code-structure)
 - [Compile and Run](#Compile-and-Run)
-- Use OpenFSI
+  - [Preparation](#Preparation)
+  - [Compile](#Compile)
+  - [Run](#Run)
+- [Use OpenFSI](#Use-OpenFSI)
   - Prepare input files
   - Application
 - Troubleshooting
@@ -30,13 +33,13 @@
 
 ## Compile and Run 
  
- Preparation: 
+ ### Preparation: 
  - First you should download Palabos source code from http://www.palabos.org/.
  - Then you also need to download LAMMPS source code from https://lammps.sandia.gov/.
  - Make sure you have installed the MPI library.
  - Add the files in `src/fix_LB` and `src/structure_potential` into LAMMPS/src directory.
 
- Compiling:
+ ### Compiling:
 
 - Compile the LAMMPS as a library
 
@@ -62,7 +65,7 @@
  
   `palabosRoot  = $palabos_dir`
  
-  You can set up the name of the project files for concrete problem. 2D and 3D prototypes are provided in `src/main`\
+  You can set up the name of the project files for concrete problem. 2D and 3D prototypes are provided in `src/main`
  
   `projectFiles = $project_name.cpp`
  
@@ -88,7 +91,7 @@
  
    in the command window, a executable file named `$project_name` will generate
  
-- Run
+### Run
  
    Configure you lammps input file, e.g., `in.lammps`, which setups the system, including reading particle coordinates, angles information and 
    bond information, and parallelism pattern such as CPU cores that will be used to run the simulation. After checking 
@@ -98,4 +101,16 @@
 
    `log.file` will record the information displayed in the window.
 
+## Use OpenFSI
 
+###Prepare data and input files
+One data file is necessary that describes the system including the number of the particles and bonds, the size of the domain,
+coordinates of the particles, and coefficients of the bonds, etc. Following is an example from `example/2D`:
+
+```
+866 atoms
+4572 bonds
+0 angles
+0 dihedrals
+762 impropers
+```
