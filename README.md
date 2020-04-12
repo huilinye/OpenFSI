@@ -45,8 +45,8 @@
   For example, if you want to run the simulation in mpi mode, you should first observe that there is a makefile
   named `Makefile.mpi` in `lammps/src/MAKE`, then make it with library mode
   
-  `cd lammps/src` 
-  `make mode=lib mpi` \
+  `cd lammps/src` \
+  `make mode=lib mpi` 
   
   This will generate a lammps library named `liblammps_mpi.a`
 
@@ -57,9 +57,12 @@
 - Modify Makefile
  In the `example` directory, each case is attached a Makefile for generating executable file. 
  First, you should provide the directory where Palabos locates, e.g., `palabos_dir` \
- `palabosRoot  = $palabos_dir`\
+ 
+ `palabosRoot  = $palabos_dir`
+ 
  You can set up the name of the project files for concrete problem. 2D and 3D prototypes are provided in `src/main`\
- `projectFiles = $project_name.cpp`\
+ 
+ `projectFiles = $project_name.cpp`
  
  
  
