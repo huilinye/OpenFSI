@@ -236,7 +236,7 @@ are bonded.
     <!-- size of the flow domain -->
     </geometry>
 	```
-	Also, you can define the viscosity of the fluid model that the Reynolds number can be fixed. 
+	Also, you can define the viscosity of the fluid that the Reynolds number can be fixed. 
 	
 	The second
 	part is the `<fluid>` part. 
@@ -274,3 +274,5 @@ are bonded.
 	```
 	Also, in this part, you can determine which type of the IB method will be used. 1 represents the velocity coupling,
 	and 2 is the force coupling.
+- Compile and Run
+  After preparing the required files, it is time to [compile](#Compile) and [run](#Run) the simulation as depicted above. 
