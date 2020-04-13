@@ -201,33 +201,74 @@ are bonded.
     Following is a typical LAMMPS input file
     ```
     units          lj
-dimension 3
-atom_style molecular
-boundary    p p p
-processors 4 2 1
-neighbor   0.6 bin
-neigh_modify   delay 0 every 1
+    dimension 3
+    
+    boundary    p p p
+    processors 4 2 1
+    bond_style     harmonic
+    improper_style neohookean
 
-#define the potential 
-pair_style lj/cut  2.0
-bond_style     harmonic
-improper_style neohookean
+    read_data 2D_cylinder_beam.data
 
-read_data 2D_cylinder_beam.data
+    timestep 0.010
+    dump 1 all custom 100  beam.lammpstrj id mol type x y z fx fy fz
+	```
+	The `units` gives the unit of this system. Here, `lj` unit is non-dimensionalized unit. Each parameter in
+	the LAMMPS will be normalized by the reference. Other units can be found in LAMMPS manual. `dimension` defines
+	the dimension of the problem. It is recommended to set it to 3. `boundary` points to the boundary of the particle
+	system. Note that this is not the boundary of the flow field. The MPI pattern can be set using the `processors`
+	command, which is followed by the number of processors used in x, y, z directions, respectively. Before reading
+	the data file `read_data 2D_cylinder_beam.data`, the bond style and improper style should be defined. Also, the timestep
+	is necessary to setup here. Finally, the command `dump` can output the particle system with LAMMPS trajectory file, which
+	contains the particle ID, type and coordinates.
+	
+   - Flow input file
+   
+    The flow conditions are contained in the xml file named `param.xml` for the initialization of Palabos. There are three parts in the flow input file.
+	The first one is the `<geometry> ` part. It gives the domain size used in the flow field. It is usually the same as
+	the size in LAMMPS system like
+	```
+	<geometry>
+    <Viscosity> 0.02 </Viscosity>
+    <!-- Reynolds number -->
+    <x_length> 240 </x_length>
+    <y_length> 120 </y_length>
+    <!-- size of the flow domain -->
+    </geometry>
+	```
+	Also, you can define the viscosity of the fluid model that the Reynolds number can be fixed. 
+	
+	The second
+	part is the `<fluid>` part. 
+	```
+    <fluid>
+    <Shear_flag> 0 </Shear_flag>
+	<!-- shear flow flag -->
+    <Shear_Top_Velocity> 0.1 </Shear_Top_Velocity>
+    <Shear_Bot_Velocity> -0.1 </Shear_Bot_Velocity>
+	<Poiseuille_flag> 1 </Poiseuille_flag>
+	<!-- Poiseuille flow flag -->
+	<Poiseuille_bodyforce> 0.000015 </Poiseuille_bodyforce>
+	<Uniform_flag> 0 </Uniform_flag>
+	<!-- uniform flow flag -->
+	<U_uniform> 0.01 </U_uniform>
+    </fluid>```
+	It provides three flow type: simple shear flow, Poiseuille flow and uniform flow. If simple shear 
+	flow is applied, the velocities of the top and bottom wall should be explicitly provided. Also, if it is Poiseuille flow,
+	the bodyforce should be presented. The uniform flow can be characterized by the uniform velocity.
+	
+	The Third part is `<simulation>` part. It shows the simulation time and output control.
+	```
+	<simulation>
+    
+    <Total_timestep>  400000 </Total_timestep>
+    <!-- Maximum timestep for simulation. -->
+    <Output_fluid_file> 200      </Output_fluid_file>
+    <Output_check_file>  20000  </Output_check_file>
 
-group fixed molecule 1
-group move molecule 2:3
-group forc molecule 3
-
-pair_coeff  * * 0.0e-6 1.0 2.0
-
-neigh_modify exclude molecule move
-
-
-#mass 1 10
-#velocity       all set 0.0 0.0 0.0 units box
-timestep 0.010
-
-#outputfile
-dump 1 all custom 100  sphere.lammpstrj id mol type x y z fx fy fz
-dump_modify 1 sort id	```
+    <CouplingType>      2   </CouplingType>
+    <!-- CouplingType: 1: velocity coupling(default); 2: force coupling -->
+	
+    </simulation>```
+	Also, in this part, you can determine which type of the IB method will be used. 1 represents the velocity coupling,
+	and 2 is the force coupling.
