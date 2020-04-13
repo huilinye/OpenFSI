@@ -252,7 +252,8 @@ are bonded.
 	<Uniform_flag> 0 </Uniform_flag>
 	<!-- uniform flow flag -->
 	<U_uniform> 0.01 </U_uniform>
-    </fluid>```
+    </fluid>
+	```
 	It provides three flow type: simple shear flow, Poiseuille flow and uniform flow. If simple shear 
 	flow is applied, the velocities of the top and bottom wall should be explicitly provided. Also, if it is Poiseuille flow,
 	the bodyforce should be presented. The uniform flow can be characterized by the uniform velocity.
@@ -269,6 +270,7 @@ are bonded.
     <CouplingType>      2   </CouplingType>
     <!-- CouplingType: 1: velocity coupling(default); 2: force coupling -->
 	
-    </simulation>```
+    </simulation>
+	```
 	Also, in this part, you can determine which type of the IB method will be used. 1 represents the velocity coupling,
 	and 2 is the force coupling.
