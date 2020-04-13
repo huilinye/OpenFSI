@@ -1,0 +1,74 @@
+units          lj
+dimension 3
+atom_style molecular
+boundary    f p f
+processors 2 12 2
+neighbor   0.3 bin
+neigh_modify   delay 0 every 1
+#comm_style tiled
+
+pair_style lj/cut 1.0
+
+bond_style harmonic
+improper_style octa
+
+read_data lat_3D_dam2.data
+ 
+mass 1 80
+mass 2 100.0
+group move molecule 2
+group fixed molecule 1
+group pa type 2
+
+#group move union bo forcepoint 
+
+#neigh_modify exclude molecule fa
+neigh_modify exclude molecule move
+
+
+pair_coeff  1 1 0.0 0.9
+pair_coeff  1 2 0.1 1.0
+pair_coeff  2 2 0.1 1.0
+
+velocity       all set 0.0 0.0 0.0 units box
+timestep 0.1
+
+#outputfile
+dump 1 all custom 100  lat.lammpstrj id mol type x y z
+dump_modify 1 sort id
+
+#compute 1 forcepoint property/atom y
+#compute dis all reduce sum c_1
+
+#fix cpub all balance 10000 1.1 rcb
+fix    2 all lb/fluid/viscous 1 1 0.1 10.0 setGamma 0.01  dx 1.0 dm 1.0 D3Q19 bc 1 1 1 1 1 1 &
+inflow 0.0 0.1 0.0   printfluid 1000
+#fix    3 move lb/pc
+#fix    4 fixed lb/viscous
+fix 4 all lb/viscous
+
+variable ramp1 equal 46
+variable ramp2 equal 2
+
+fix w1 all wall/lj126 zhi v_ramp1 1.0 2.0 2.25 units box
+fix w2 all wall/lj126 zlo v_ramp2 1.0 1.0 1.1225 units box
+
+variable ramp3 equal 46
+variable ramp4 equal 2
+
+fix w3 all wall/lj126 xhi v_ramp3 1.0 2.0 2.25 units box
+fix w4 all wall/lj126 xlo v_ramp4 1.0 1.0 1.1225 units box
+
+fix ha all vtk 100 Hex meshfile octa_ele.data output leaf
+
+fix    5 pa nve
+#fix out all ave/time 100 5 1000 c_dis file displacement.dat
+
+#thermo 
+
+thermo 1000
+thermo_style custom step temp epair ebond eangle edihed emol etotal vol
+ 
+run 400000
+
+

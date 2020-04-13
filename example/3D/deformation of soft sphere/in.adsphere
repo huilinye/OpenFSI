@@ -1,0 +1,43 @@
+units          lj
+dimension 3
+atom_style molecular
+boundary    f p f
+neighbor   0.6 bin
+neigh_modify   delay 0 every 1
+
+#define the potential 
+pair_style lj/cut  2.0
+angle_style    rbc
+bond_style     harmonic
+dihedral_style bend
+read_data 1sphere.data
+
+group sphere type 1
+
+group sphere1 molecule 1
+
+pair_coeff  1 1 4.4e-6 1.0 2.0
+
+neigh_modify exclude molecule sphere1
+
+
+mass 1 1
+velocity       all set 0.0 0.0 0.0 units box
+timestep 1.0
+
+#outputfile
+dump 1 all custom 20  sphere.lammpstrj id mol type x y z
+dump_modify 1 sort id
+
+#fix 1 all fcm 1
+#fix 2 all nve
+#fix    1 all lb/fluid 1 2 0.16667 1.0 setGamma 13.655 dx 1.0 dm 1.0 zwall_velocity -0.1 0.1 printfluid 2000
+#fix    2 all lb/pc
+
+#thermo 
+
+thermo 1000
+thermo_style custom step temp epair ebond eangle edihed emol etotal vol
+
+
+
