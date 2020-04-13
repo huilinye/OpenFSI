@@ -9,8 +9,8 @@
   - [Compile](#Compile)
   - [Run](#Run)
 - [Use OpenFSI](#Use-OpenFSI)
-  - Prepare data and input files
-  - Compile and run(#Compile-and-Run)
+  - [Prepare data and input files](#Prepare-data-and-input-files)
+  - [Make and run](#Make-and-Run)
 - [Troubleshooting](#Trouble-shooting)
 
 ## About OpenFSI
@@ -274,7 +274,9 @@ are bonded.
 	```
 	Also, in this part, you can determine which type of the IB method will be used. 1 represents the velocity coupling,
 	and 2 is the force coupling.
-- Compile and Run
+	
+### Make and Run
+
   After preparing the required files, it is time to [compile](#Compile) and [run](#Run) the simulation as depicted above. 
   
 ## Trouble-shooting
