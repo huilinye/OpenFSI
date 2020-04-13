@@ -193,10 +193,10 @@ are bonded.
 
 - Input files
 
-Two input files are required: one having to do with the setups of the LAMMPS, and the other is designed to 
-control the flow conditions.
+   Two input files are required: one having to do with the setups of the LAMMPS, and the other is designed to 
+   control the flow conditions.
 
-  - LAMMPS input file
+   - LAMMPS input file
     
     Following is a typical LAMMPS input file
     ```
