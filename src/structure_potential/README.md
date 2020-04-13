@@ -1,0 +1,1 @@
+These are self-explained structure potential files used in the LAMMPS

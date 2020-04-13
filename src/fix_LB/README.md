@@ -1,11 +1,4 @@
-# OpenBloodFlow
-Simulating blood flow as red blood cell (RBC) suspension in application to drug delivery system
-
-==================================================
-
-These c++ files are potentials and fix files based on the LAMMPS framework.
-We incorporate magnetic force field and stochastic adhesive dynamics.
-
-For more details:
-
-Ye, H., Shen, Z., & Li, Y. (2018). Computational modeling of magnetic particle margination within blood flow through LAMMPS. Computational Mechanics, 62(3), 457-476.
+fix_lb_fluid: Lattice Boltzmann method embedded in the LAMMPS.
+fix_lb_pc: Velocity coupling based integrator for the motion of the particle
+fix_lb_rigid_pc_sphere: Update the structure as a rigid body
+fix_lb_viscous: Force coupling based integrator for the motion of particles
