@@ -193,4 +193,41 @@ are bonded.
 
 - Input files
 
-Two input files are required.
+Two input files are required: one having to do with the setups of the LAMMPS, and the other is designed to 
+control the flow conditions.
+
+  - LAMMPS input file
+    
+    Following is a typical LAMMPS input file
+    ```
+    units          lj
+dimension 3
+atom_style molecular
+boundary    p p p
+processors 4 2 1
+neighbor   0.6 bin
+neigh_modify   delay 0 every 1
+
+#define the potential 
+pair_style lj/cut  2.0
+bond_style     harmonic
+improper_style neohookean
+
+read_data 2D_cylinder_beam.data
+
+group fixed molecule 1
+group move molecule 2:3
+group forc molecule 3
+
+pair_coeff  * * 0.0e-6 1.0 2.0
+
+neigh_modify exclude molecule move
+
+
+#mass 1 10
+#velocity       all set 0.0 0.0 0.0 units box
+timestep 0.010
+
+#outputfile
+dump 1 all custom 100  sphere.lammpstrj id mol type x y z fx fy fz
+dump_modify 1 sort id	```
