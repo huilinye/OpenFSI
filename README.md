@@ -9,9 +9,9 @@
   - [Compile](#Compile)
   - [Run](#Run)
 - [Use OpenFSI](#Use-OpenFSI)
-  - Prepare input files
-  - Application
-- Troubleshooting
+  - Prepare data and input files
+  - Compile and run(#Compile-and-Run)
+- [Troubleshooting](#Trouble-shooting)
 
 ## About OpenFSI
 
@@ -276,3 +276,8 @@ are bonded.
 	and 2 is the force coupling.
 - Compile and Run
   After preparing the required files, it is time to [compile](#Compile) and [run](#Run) the simulation as depicted above. 
+  
+## Trouble-shooting
+
+  If any errors happen to you during the compiling or running stage, please contact `huilin.ye@uconn.edu` for assistance
+  to solve the problem.
