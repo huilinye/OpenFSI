@@ -1,0 +1,58 @@
+units   micro
+dimension 3
+atom_style molecular
+boundary    f p f
+
+neighbor   20 bin
+neigh_modify   delay 0 every 1
+
+#define the potential 
+
+pair_style lj/cut 20.0
+
+
+
+read_data 16sphere.data
+
+
+group sphere molecule 1:16
+
+
+pair_coeff  * * 1.0 10.0 20.0
+
+neigh_modify exclude molecule sphere
+
+mass * 2128500
+timestep 10
+
+velocity       all set 0.0 0.0 0.0 units box
+
+#outputfile
+dump 1 all custom 1000 sphere.lammpstrj id type x y z
+dump_modify 1 sort id
+#apply gravitational force (gravitational acceleration 9.8 m/s^2)
+fix af all addforce 0.0 20.8588 0.0
+
+fix    1 all lb/fluid/viscous 1 1 1.0 1.0 setArea 1 127.8 dx 25.0 dm 1.0 &
+D3Q19 bc 0 0 1 1 1 1 inflow 0.0 0.0 0.0 printfluid 100
+
+#fix    1 all lb/fluid/viscous 1 1 1.0 0.000998 setArea 1 127.8 dx 25.0 dm 1.0 D3Q19 bodyforce 0.0 0.000001 0.0 printfluid 1000
+
+fix    2 all lb/viscous
+fix    3 all rigid molecule
+
+
+#output structure file
+fix outvtk all vtk 100 Tri meshfile Tri_atomic_ele.data output flu_sphere
+
+#thermo 
+
+thermo 100
+thermo_style custom step temp epair ebond eangle edihed emol etotal vol
+
+compute 1 all com
+fix out all ave/time 10 1 10 c_1[1] c_1[2] c_1[3] file com.dat
+ 
+run 21000
+
+

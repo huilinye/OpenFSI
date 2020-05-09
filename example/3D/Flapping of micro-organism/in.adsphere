@@ -1,0 +1,67 @@
+units   micro
+dimension 3
+atom_style molecular
+boundary    f p f
+
+neighbor   20 bin
+neigh_modify   delay 0 every 1
+
+#define the potential 
+
+pair_style lj/cut 20.0
+bond_style harmonic
+angle_style harmonic
+
+read_data 1sphere_2filament.data
+
+group sphere type 1
+group fila type 2:3
+
+pair_coeff  * * 0.0 0.0 20.0
+
+neigh_modify exclude type 1 1
+
+mass * 2128500
+timestep 10
+
+#velocity       all set 0.0 0.0 0.0 units box
+
+#outputfile
+dump 1 all custom 20 sphere.lammpstrj id type x y z
+dump_modify 1 sort id
+#apply gravitational force (gravitational acceleration 9.8 m/s^2)
+#variable os equal swiggle(0.0,20.8588,200)
+#fix af all addforce 0.0 v_os 0.0
+
+variable vs equal swiggle(0.0,1.0,1000)
+#velocity all set 0.0 v_vs 0.0 sum yes units box
+fix vf sphere move wiggle 0.0 0.0 50.0 20000
+#fix vf all move variable NULL NULL NULL NULL v_vs NULL
+
+fix    1 all lb/fluid/viscous 1 1 1.0 1.0 setArea 1 127.8 dx 25.0 dm 1.0 &
+D3Q19 bc 1 1 1 1 1 1 inflow 0.0 0.0 0.0 printfluid 100
+
+#fix    1 all lb/fluid/viscous 1 1 1.0 0.000998 setArea 1 127.8 dx 25.0 dm 1.0 D3Q19 bodyforce 0.0 0.000001 0.0 printfluid 1000
+
+fix    2 all lb/viscous
+#fix    3 all rigid single
+fix 3 fila nve
+
+#output structure file
+fix outvtk all vtk 100 Tri meshfile Tri_atomic_ele.data output flu_sphere
+
+#thermo 
+
+thermo 100
+thermo_style custom step temp epair ebond eangle edihed emol etotal vol
+
+compute 1 all com
+fix out all ave/time 10 1 10 c_1[1] c_1[2] c_1[3] file com.dat
+
+compute 2 all property/atom fx fy fz
+compute 3 all reduce sum c_2[2]
+fix out2 all ave/time 10 1 10 c_3 file force.dat
+ 
+run 20000
+
+
